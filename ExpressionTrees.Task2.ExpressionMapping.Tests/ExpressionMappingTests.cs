@@ -13,8 +13,23 @@ namespace ExpressionTrees.Task2.ExpressionMapping.Tests
         {
             var mapGenerator = new MappingGenerator();
             var mapper = mapGenerator.Generate<Foo, Bar>();
+            var testData = new Foo()
+            {
+                LongF = 1,
+                LongP = 2,
+                StringF = "aa",
+                StringP = "bb",
+                Number = 3
+            };
 
-            var res = mapper.Map(new Foo());
+            var res = mapper.Map(testData);
+
+            Assert.AreEqual(1, res.LongF);
+            Assert.AreEqual(2, res.LongP);
+            Assert.AreEqual("aa", res.StringF);
+            Assert.AreEqual("bb", res.StringP);
+            Assert.AreEqual(0, res.Number);
+            Assert.AreEqual(null, res.String1);
         }
     }
 }

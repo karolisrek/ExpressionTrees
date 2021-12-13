@@ -7,6 +7,7 @@
  * The results could be printed in console or checked via Debugger using any Visualizer.
  */
 using System;
+using System.Linq.Expressions;
 
 namespace ExpressionTrees.Task1.ExpressionsTransformer
 {
@@ -17,9 +18,29 @@ namespace ExpressionTrees.Task1.ExpressionsTransformer
             Console.WriteLine("Expression Visitor for increment/decrement.");
             Console.WriteLine();
 
-            // todo: feel free to add your code here
+            Expression<Func<int, int>> ex = x => x - 1;
+            Test(x => x + 1);
+            Test(x => x - 1);
+            Test(variableName => variableName + 1);
+            Test(variableName => variableName - 1);
+
+            Test(x => x + 2);
+            Test(x => x - 2);
+            Test(variableName => variableName + 2);
+            Test(variableName => variableName - 2);
 
             Console.ReadLine();
+        }
+
+        private static void Test(Expression<Func<int, int>> expression)
+        {
+            Console.WriteLine($"Testing expression - {expression}");
+
+            var expressionVisitor = new IncDecExpressionVisitor();
+            var result = expressionVisitor.Visit(expression);
+
+            Console.WriteLine($"Received expression - {result}");
+            Console.WriteLine("");
         }
     }
 }
